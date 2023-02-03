@@ -10,6 +10,8 @@ import { environment } from '@env/environment';
 import { NzTabChangeEvent } from 'ng-zorro-antd/tabs';
 import { finalize } from 'rxjs';
 
+import { PassportService } from '../passport.service';
+
 @Component({
   selector: 'passport-login',
   templateUrl: './login.component.html',
@@ -29,14 +31,15 @@ export class UserLoginComponent implements OnDestroy {
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
     private startupSrv: StartupService,
     private http: _HttpClient,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private passportService: PassportService
   ) {}
 
   // #region fields
 
   form = this.fb.nonNullable.group({
-    userName: ['', [Validators.required, Validators.pattern(/^(admin|user)$/)]],
-    password: ['', [Validators.required, Validators.pattern(/^(ng\-alain\.com)$/)]],
+    userName: [''],
+    password: [''],
     mobile: ['', [Validators.required, Validators.pattern(/^1\d{10}$/)]],
     captcha: ['', [Validators.required]],
     remember: [true]
@@ -100,19 +103,21 @@ export class UserLoginComponent implements OnDestroy {
     // 然一般来说登录请求不需要校验，因此加上 `ALLOW_ANONYMOUS` 表示不触发用户 Token 校验
     this.loading = true;
     this.cdr.detectChanges();
-    this.http
-      .post(
-        '/login/account',
-        {
-          type: this.type,
-          userName: this.form.value.userName,
-          password: this.form.value.password
-        },
-        null,
-        {
-          context: new HttpContext().set(ALLOW_ANONYMOUS, true)
-        }
-      )
+    this.passportService
+      .login(this.form.value.userName, this.form.value.password)
+      // this.http
+      //   .post(
+      //     '/login',
+      //     {
+      //       type: this.type,
+      //       userName: this.form.value.userName,
+      //       password: this.form.value.password
+      //     },
+      //     null,
+      //     {
+      //       context: new HttpContext().set(ALLOW_ANONYMOUS, true)
+      //     }
+      //   )
       .pipe(
         finalize(() => {
           this.loading = false;
@@ -120,11 +125,11 @@ export class UserLoginComponent implements OnDestroy {
         })
       )
       .subscribe(res => {
-        if (res.msg !== 'ok') {
-          this.error = res.msg;
-          this.cdr.detectChanges();
-          return;
-        }
+        // if (res.msg !== 'ok') {
+        //   this.error = res.msg;
+        //   this.cdr.detectChanges();
+        //   return;
+        // }
         // 清空路由复用信息
         this.reuseTabService.clear();
         // 设置用户Token信息
