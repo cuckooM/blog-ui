@@ -16,14 +16,14 @@
       "hideInBreadcrumb": true,
       "children": [
         {
-          "text": "仪表盘",
-          "i18n": "menu.dashboard",
+          "text": "博客",
+          "i18n": "blog.title",
           "icon": "anticon-dashboard",
           "children": [
             {
-              "text": "仪表盘V1",
-              "link": "/dashboard/v1",
-              "i18n": "menu.dashboard.v1"
+              "text": "增加",
+              "link": "/blog/add",
+              "i18n": "button.add"
             },
             {
               "text": "分析页",

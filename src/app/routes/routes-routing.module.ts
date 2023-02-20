@@ -25,7 +25,8 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent, data: { title: '仪表盘' } },
-      { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) }
+      { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
+      { path: 'blog', loadChildren: () => import('./blog/blog.module').then(m => m.BlogModule) }
       // 业务子模块
       // { path: 'widgets', loadChildren: () => import('./widgets/widgets.module').then(m => m.WidgetsModule) },
     ]
@@ -45,8 +46,7 @@ const routes: Routes = [
       { path: 'login', component: UserLoginComponent, data: { title: '登录' } },
       { path: 'register', component: UserRegisterComponent, data: { title: '注册' } },
       { path: 'register-result', component: UserRegisterResultComponent, data: { title: '注册结果' } },
-      { path: 'lock', component: UserLockComponent, data: { title: '锁屏' } },
-      { path: 'blog', loadChildren: () => import('./blog/blog.module').then(m => m.BlogModule) }
+      { path: 'lock', component: UserLockComponent, data: { title: '锁屏' } }
     ]
   },
   // 单页不包裹Layout

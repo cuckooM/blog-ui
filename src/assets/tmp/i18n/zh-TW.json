@@ -116,6 +116,7 @@
   "app.monitor.resource-surplus": "資源剩餘",
   "app.monitor.fund-surplus": "補貼資金剩餘",
   "app.lock": "鎖屏",
+  "app.unlock": "解鎖",
   "app.login.message-invalid-credentials": "賬戶或密碼錯誤（admin/ant.design）",
   "app.login.message-invalid-verification-code": "驗證碼錯誤",
   "app.login.tab-login-credentials": "賬戶密碼登錄",
