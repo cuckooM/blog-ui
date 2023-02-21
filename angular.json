@@ -65,12 +65,19 @@
             "inlineStyleLanguage": "less",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "node_modules/tinymce/",
+                "output": "/assets/tinymce/"
+              }
             ],
             "styles": [
               "src/styles.less"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/tinymce/tinymce.min.js"
+            ],
             "allowedCommonJsDependencies": [
               "ajv",
               "ajv-formats",
