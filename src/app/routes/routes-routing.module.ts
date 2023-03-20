@@ -26,9 +26,10 @@ const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent, data: { title: '仪表盘' } },
       { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
-      { path: 'blog', loadChildren: () => import('./blog/blog.module').then(m => m.BlogModule) }
+      { path: 'blog', loadChildren: () => import('./manage/blog/blog.module').then(m => m.BlogModule) },
       // 业务子模块
       // { path: 'widgets', loadChildren: () => import('./widgets/widgets.module').then(m => m.WidgetsModule) },
+      { path: 'manage', loadChildren: () => import('./manage/manage.module').then(m => m.ManageModule) }
     ]
   },
   // 空白布局
