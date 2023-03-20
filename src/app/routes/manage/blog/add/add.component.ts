@@ -35,7 +35,7 @@ export class BlogAddComponent implements OnInit {
 
   submit() {
     console.log(this.content);
-    this.http.post("/api/manage/blog", { title: "haha", content: this.content }).subscribe((data) => {
+    this.http.post('/api/manage/blog', { title: 'haha', content: this.content }).subscribe(data => {
       console.log(data);
     });
   }
