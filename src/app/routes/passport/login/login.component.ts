@@ -124,27 +124,32 @@ export class UserLoginComponent implements OnDestroy {
           this.cdr.detectChanges();
         })
       )
-      .subscribe(res => {
-        // if (res.msg !== 'ok') {
-        //   this.error = res.msg;
-        //   this.cdr.detectChanges();
-        //   return;
-        // }
-        // 清空路由复用信息
-        this.reuseTabService.clear();
-        // 设置用户Token信息
-        // TODO: Mock expired value
-        let user = { token: res.id_token, expired: +new Date() + 1000 * 60 * 5 };
-        this.tokenService.set(user);
-        // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响
-        this.startupSrv.load().subscribe(() => {
-          let url = this.tokenService.referrer!.url || '/';
-          if (url.includes('/passport')) {
-            url = '/';
-          }
-          this.router.navigateByUrl(url);
-        });
-      });
+      .subscribe(
+        res => {
+          // if (res.msg !== 'ok') {
+          //   this.error = res.msg;
+          //   this.cdr.detectChanges();
+          //   return;
+          // }
+          // 清空路由复用信息
+          this.reuseTabService.clear();
+          // 设置用户Token信息
+          // TODO: Mock expired value
+          let user = { token: res.id_token, expired: +new Date() + 1000 * 60 * 5 };
+          this.tokenService.set(user);
+          // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响
+          this.startupSrv.load().subscribe(() => {
+            let url = this.tokenService.referrer!.url || '/';
+            if (url.includes('/passport')) {
+              url = '/';
+            }
+            this.router.navigateByUrl(url);
+          });
+        },
+        e => {
+          this.error = e.message;
+        }
+      );
   }
 
   // #region social
