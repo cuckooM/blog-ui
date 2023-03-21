@@ -61,13 +61,13 @@
           </ng-template>
         </nz-list-item-meta>
         <ng-template #nzContent>
-          <p>{{ item.content }}</p>
+          <p [innerHTML]="item.content"></p>
           <div class="mt-md d-flex">
             <nz-avatar [nzSrc]="item.avatar" [nzSize]="'small'" class="mr-sm"></nz-avatar>
-            <a href="{{ item.href }}" target="_blank">{{ item.owner }}</a>
-            <span class="px-sm">发布在</span>
-            <a href="{{ item.href }}" target="_blank">{{ item.href }}</a>
-            <time class="pl-md text-grey" title="{{ item.updatedAt }}">{{ item.updatedAt | _date }}</time>
+            <!-- <a href="{{ item.href }}" target="_blank">{{ item.author.displayName }}</a> -->
+            <span>{{ item.author.displayName }}</span>
+            <span class="px-sm">{{ 'blog.attr.updateTime' | i18n }}</span>
+            <time class="text-grey" title="{{ item.updateTime }}">{{ item.updateTime | _date }}</time>
           </div>
         </ng-template>
       </nz-list-item>
