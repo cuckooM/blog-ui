@@ -19,6 +19,6 @@ export class BlogService {
    * @returns 结果
    */
   page(params: PageParams): Observable<Page<Blog>> {
-    return this.http.get('/api/manage/blog', params);
+    return this.http.get('/api/blog', params);
   }
 }
