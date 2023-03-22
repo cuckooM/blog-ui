@@ -164,6 +164,7 @@
   "blog.title.manage": "博客管理系统",
   "blog.title": "博客",
   "blog.publish": "发布博客",
-  "blog.mine": "我的博客"
+  "blog.mine": "我的博客",
+  "blog.attr.updateTime": "更新于"
 
 }

@@ -1,11 +1,21 @@
+import { User } from '../../user/model';
+
 /**
  * 博客实体
  */
 export interface Blog {
+  /** ID */
   id?: number;
+  /** 标题 */
   title?: string;
+  /** 内容 */
   content?: string;
+  /** 作者 ID */
   authorId?: number;
+  /** 作者 */
+  author?: User;
+  /** 创建时间 */
   createTime?: Date;
+  /** 修改时间 */
   updateTime?: Date;
 }
