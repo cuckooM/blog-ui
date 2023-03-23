@@ -1,7 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { PageInfo, PageInfoEmpty } from '@core';
 import { _HttpClient } from '@delon/theme';
+import { zip } from 'rxjs';
 
+import { LabelService } from '../../label/label.service';
+import { Label } from '../../label/model';
 import { BlogService } from '../blog.service';
 import { Blog } from '../model';
 
@@ -11,7 +14,12 @@ import { Blog } from '../model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BlogListComponent implements OnInit {
-  constructor(private http: _HttpClient, private cdr: ChangeDetectorRef, private blogService: BlogService) {}
+  constructor(
+    private http: _HttpClient,
+    private cdr: ChangeDetectorRef,
+    private blogService: BlogService,
+    private labelService: LabelService
+  ) {}
   q = {
     ps: 5,
     categories: [],
@@ -26,22 +34,10 @@ export class BlogListComponent implements OnInit {
   /** 分页信息 */
   pageInfo?: PageInfo;
 
-  // region: cateogry
-  categories = [
-    { id: 0, text: '全部', value: false },
-    { id: 1, text: '类目一', value: false },
-    { id: 2, text: '类目二', value: false },
-    { id: 3, text: '类目三', value: false },
-    { id: 4, text: '类目四', value: false },
-    { id: 5, text: '类目五', value: false },
-    { id: 6, text: '类目六', value: false },
-    { id: 7, text: '类目七', value: false },
-    { id: 8, text: '类目八', value: false },
-    { id: 9, text: '类目九', value: false },
-    { id: 10, text: '类目十', value: false },
-    { id: 11, text: '类目十一', value: false },
-    { id: 12, text: '类目十二', value: false }
-  ];
+  // 标签
+  labels: Label[] = [{ id: 0, name: '全部' }];
+  // 当前活跃标签
+  activeLabelIndex = 0;
   // endregion
 
   // region: owners
@@ -69,11 +65,7 @@ export class BlogListComponent implements OnInit {
   ];
 
   changeCategory(status: boolean, idx: number): void {
-    if (idx === 0) {
-      this.categories.map(i => (i.value = status));
-    } else {
-      this.categories[idx].value = status;
-    }
+    this.activeLabelIndex == idx;
   }
 
   setOwner(): void {
@@ -88,9 +80,10 @@ export class BlogListComponent implements OnInit {
   getData(): void {
     this.loading = true;
     let params = this.pageInfo ? { page: this.pageInfo.number + 1, size: this.pageInfo.size } : {};
-    this.blogService.page(params).subscribe(
-      page => {
+    zip(this.blogService.page(params), this.labelService.list()).subscribe(
+      ([page, labels]) => {
         this.list = this.list.concat(page.content);
+        this.labels = [{ id: 0, name: '全部' }, ...labels];
         // 是否有更多数据
         this.pageInfo = page as PageInfo;
         this.loading = false;

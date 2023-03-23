@@ -1,42 +1,16 @@
 <nz-card [nzBordered]="false">
   <form nz-form se-container="1" size="compact" [gutter]="32" [labelWidth]="null">
-    <se label="所属类目" line>
+    <se label="{{ 'label.title' | i18n }}" line>
       <tag-select>
         <nz-tag
-          *ngFor="let i of categories; let idx = index"
+          *ngFor="let i of labels; let idx = index"
           nzMode="checkable"
-          [nzChecked]="i.value"
+          [nzChecked]="idx == activeLabelIndex"
           (nzCheckedChange)="changeCategory($event, idx)"
         >
-          {{ i.text }}
+          {{ i.name }}
         </nz-tag>
       </tag-select>
-    </se>
-    <se label="owner" line>
-      <nz-select [(ngModel)]="q.owners" name="owners" [nzMode]="'tags'" style="max-width: 286px">
-        <nz-option *ngFor="let i of owners" [nzLabel]="i.name" [nzValue]="i.id"></nz-option>
-      </nz-select>
-      <a class="ml-sm" (click)="setOwner()">只看自己的</a>
-    </se>
-    <se label="其它选项">
-      <div class="ant-form ant-form-inline">
-        <nz-form-item>
-          <nz-form-label nzFor="rate">作者</nz-form-label>
-          <nz-form-control>
-            <nz-select [(ngModel)]="q.user" name="user" [nzPlaceHolder]="'不限'" [nzShowSearch]="true" style="width: 100px">
-              <nz-option [nzLabel]="'李三'" [nzValue]="'lisa'"></nz-option>
-            </nz-select>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label nzFor="rate">好评度</nz-form-label>
-          <nz-form-control>
-            <nz-select [(ngModel)]="q.rate" name="rate" [nzPlaceHolder]="'不限'" [nzShowSearch]="true" style="width: 100px">
-              <nz-option [nzLabel]="'优秀'" [nzValue]="'good'"></nz-option>
-            </nz-select>
-          </nz-form-control>
-        </nz-form-item>
-      </div>
     </se>
   </form>
 </nz-card>
