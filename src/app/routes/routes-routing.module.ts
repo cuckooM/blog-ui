@@ -23,7 +23,7 @@ const routes: Routes = [
     component: LayoutBasicComponent,
     canActivate: [startPageGuard, SimpleGuard],
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: '', redirectTo: 'blog', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent, data: { title: '仪表盘' } },
       { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
       { path: 'blog', loadChildren: () => import('./manage/blog/blog.module').then(m => m.BlogModule) },

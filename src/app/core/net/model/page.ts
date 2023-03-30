@@ -67,7 +67,7 @@ export interface Order {
   /** 属性名称 */
   property: string;
   /** 忽略大小写 */
-  ignoreCase: boolean;
+  ignoreCase?: boolean;
 }
 /**
  * 排序顺序

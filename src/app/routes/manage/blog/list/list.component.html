@@ -3,10 +3,10 @@
     <se label="{{ 'label.title' | i18n }}" line>
       <tag-select>
         <nz-tag
-          *ngFor="let i of labels; let idx = index"
+          *ngFor="let i of labels"
           nzMode="checkable"
-          [nzChecked]="idx == activeLabelIndex"
-          (nzCheckedChange)="changeCategory($event, idx)"
+          [nzChecked]="activeLabels.includes(i.id)"
+          (nzCheckedChange)="changeCategory($event, i.id)"
         >
           {{ i.name }}
         </nz-tag>
@@ -28,10 +28,9 @@
           <ng-template #nzTitle>
             <a href="{{ item.href }}" target="_blank">{{ item.title }}</a>
           </ng-template>
+          <!-- 标签 -->
           <ng-template #nzDescription>
-            <nz-tag>Alain</nz-tag>
-            <nz-tag>ng-zorro-antd</nz-tag>
-            <nz-tag>Ant Design</nz-tag>
+            <nz-tag *ngFor="let label of item.labels">{{ label.name }}</nz-tag>
           </ng-template>
         </nz-list-item-meta>
         <ng-template #nzContent>
@@ -48,7 +47,7 @@
     </ng-template>
     <ng-template #loadMore>
       <div class="text-center mt-md" *ngIf="pageInfo && pageInfo.next">
-        <button nz-button (click)="getData()" [nzLoading]="loading" [nzType]="'dashed'" style="min-width: 200px">加载更多</button>
+        <button nz-button (click)="getData()" [nzType]="'dashed'" style="min-width: 200px">加载更多</button>
       </div>
     </ng-template>
   </nz-list>
