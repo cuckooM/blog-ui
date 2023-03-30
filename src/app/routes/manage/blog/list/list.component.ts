@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { PageInfo, PageInfoEmpty } from '@core';
+import { PageInfo, PageParams } from '@core';
 import { _HttpClient } from '@delon/theme';
+import * as lodash from 'lodash';
 import { zip } from 'rxjs';
 
-import { LabelService } from '../../label/label.service';
-import { Label } from '../../label/model';
+import { Label, LabelService } from '../../label';
 import { BlogService } from '../blog.service';
 import { Blog } from '../model';
 
@@ -37,7 +37,7 @@ export class BlogListComponent implements OnInit {
   // 标签
   labels: Label[] = [{ id: 0, name: '全部' }];
   // 当前活跃标签
-  activeLabelIndex = 0;
+  activeLabels: number[] = [];
   // endregion
 
   // region: owners
@@ -65,7 +65,16 @@ export class BlogListComponent implements OnInit {
   ];
 
   changeCategory(status: boolean, idx: number): void {
-    this.activeLabelIndex == idx;
+    if (idx == 0) {
+      this.activeLabels = [];
+    } else {
+      if (status) {
+        this.activeLabels.push(idx);
+      } else {
+        lodash.remove(this.activeLabels, item => item == idx);
+      }
+    }
+    this.getData();
   }
 
   setOwner(): void {
@@ -79,7 +88,11 @@ export class BlogListComponent implements OnInit {
 
   getData(): void {
     this.loading = true;
-    let params = this.pageInfo ? { page: this.pageInfo.number + 1, size: this.pageInfo.size } : {};
+    let sort = 'updateTime,desc';
+    let params: PageParams = this.pageInfo ? { page: this.pageInfo.number + 1, size: this.pageInfo.size, sort: sort } : { sort: sort };
+    if (this.activeLabels.length > 0) {
+      params['labelIdsIn'] = lodash.join(this.activeLabels, ',');
+    }
     zip(this.blogService.page(params), this.labelService.list()).subscribe(
       ([page, labels]) => {
         this.list = this.list.concat(page.content);

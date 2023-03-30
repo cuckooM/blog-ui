@@ -1,5 +1,3 @@
-import { Sort } from './page';
-
 /**
  * 参数实体
  */
@@ -15,7 +13,7 @@ export interface PageRequest {
   /** 单页数量 */
   size?: number;
   /** 排序信息 */
-  sort?: Sort;
+  sort?: string;
 }
 /**
  * 分页请求参数实体

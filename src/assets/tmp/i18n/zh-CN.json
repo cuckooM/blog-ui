@@ -160,12 +160,17 @@
   "button.edit": "编辑",
   "button.delete": "删除",
   "button.save": "保存",
+  "button.publish": "发布",
 
   "blog.title.manage": "博客管理系统",
   "blog.title": "博客",
   "blog.publish": "发布博客",
   "blog.mine": "我的博客",
+  "blog.attr.title": "标题",
+  "blog.attr.content": "内容",
+  "blog.attr.label": "标签",
   "blog.attr.updateTime": "更新于",
+  "blog.attr.title.placeholder": "请输入标题",
 
   "label.title": "标签"
 
