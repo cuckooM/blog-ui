@@ -3,7 +3,7 @@
  */
 export interface Label {
   /** ID */
-  id?: number;
+  id: number;
   /** 名称 */
-  name?: string;
+  name: string;
 }

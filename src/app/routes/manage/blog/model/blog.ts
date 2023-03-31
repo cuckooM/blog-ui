@@ -1,3 +1,4 @@
+import { Label } from '../../label';
 import { User } from '../../user/model';
 
 /**
@@ -18,4 +19,8 @@ export interface Blog {
   createTime?: Date;
   /** 修改时间 */
   updateTime?: Date;
+  /** 标签 ID 集合 */
+  labelIds?: number[];
+  /** 标签 */
+  labels?: Label[];
 }

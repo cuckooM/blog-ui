@@ -1,18 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { _HttpClient } from '@delon/theme';
+import * as lodash from 'lodash';
+
+import { Label, LabelService } from '../../label';
+import { Blog } from '../model';
 
 @Component({
   selector: 'app-blog-add',
-  templateUrl: './add.component.html'
+  templateUrl: './add.component.html',
+  styleUrls: ['./add.component.less']
 })
 export class BlogAddComponent implements OnInit {
-  constructor(private http: _HttpClient) {}
+  constructor(private http: _HttpClient, private labelService: LabelService) {}
+
+  /** 表单数据 */
+  data: Blog = { labelIds: [] };
+  // 标签
+  labels: Label[] = [];
 
   ngOnInit(): void {
-    console.log('Hello World!');
+    this.labelService.list().subscribe(labels => {
+      this.labels = labels;
+    });
   }
-
-  content: string = '';
 
   // 编辑器配置
   editorConfig = {
@@ -33,10 +43,15 @@ export class BlogAddComponent implements OnInit {
       '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun,serif;仿宋体=FangSong,serif;黑体=SimHei,sans-serif;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;'
   };
 
+  tagClick(checked: boolean, label: Label) {
+    if (checked) {
+      this.data.labelIds?.push(label.id);
+    } else if (this.data.labelIds) {
+      lodash.remove(this.data.labelIds, item => item == label.id);
+    }
+  }
+
   submit() {
-    console.log(this.content);
-    this.http.post('/api/manage/blog', { title: 'haha', content: this.content }).subscribe(data => {
-      console.log(data);
-    });
+    this.http.post('/api/manage/blog', this.data).subscribe(() => {});
   }
 }
