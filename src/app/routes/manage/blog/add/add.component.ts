@@ -14,7 +14,7 @@ export class BlogAddComponent implements OnInit {
   constructor(private http: _HttpClient, private labelService: LabelService) {}
 
   /** 表单数据 */
-  data: Blog = { labelIds: [] };
+  data: Blog = { labels: [] };
   // 标签
   labels: Label[] = [];
 
@@ -45,9 +45,9 @@ export class BlogAddComponent implements OnInit {
 
   tagClick(checked: boolean, label: Label) {
     if (checked) {
-      this.data.labelIds?.push(label.id);
-    } else if (this.data.labelIds) {
-      lodash.remove(this.data.labelIds, item => item == label.id);
+      this.data.labels?.push({ id: label.id });
+    } else if (this.data.labels) {
+      lodash.remove(this.data.labels, item => item.id === label.id);
     }
   }
 
