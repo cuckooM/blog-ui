@@ -9,6 +9,7 @@ import { LayoutBasicComponent } from '../layout/basic/basic.component';
 import { LayoutPassportComponent } from '../layout/passport/passport.component';
 // dashboard pages
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { BlogListComponent } from './manage/blog/list/list.component';
 // single pages
 import { CallbackComponent } from './passport/callback.component';
 import { UserLockComponent } from './passport/lock/lock.component';
@@ -26,19 +27,16 @@ const routes: Routes = [
       { path: '', redirectTo: 'blog', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent, data: { title: '仪表盘' } },
       { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
-      { path: 'blog', loadChildren: () => import('./manage/blog/blog.module').then(m => m.BlogModule) },
       // 业务子模块
       // { path: 'widgets', loadChildren: () => import('./widgets/widgets.module').then(m => m.WidgetsModule) },
       { path: 'manage', loadChildren: () => import('./manage/manage.module').then(m => m.ManageModule) }
     ]
   },
-  // 空白布局
-  // {
-  //     path: 'blank',
-  //     component: LayoutBlankComponent,
-  //     children: [
-  //     ]
-  // },
+  {
+    path: 'blog',
+    component: BlogListComponent,
+    loadChildren: () => import('./manage/blog/blog.module').then(m => m.BlogModule)
+  },
   // passport
   {
     path: 'passport',

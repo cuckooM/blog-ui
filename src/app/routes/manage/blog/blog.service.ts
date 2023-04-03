@@ -21,4 +21,24 @@ export class BlogService {
   page(params: PageParams): Observable<Page<Blog>> {
     return this.http.get('/api/blog', params);
   }
+
+  /**
+   * 根据 ID 查询实体
+   *
+   * @param id ID
+   * @returns 结果
+   */
+  find(id: number | string): Observable<Blog> {
+    return this.http.get(`/api/blog/${id}`);
+  }
+
+  /**
+   * 增加实体
+   *
+   * @param data 待增加数据
+   * @returns 结果
+   */
+  add(data: Blog): Observable<Blog> {
+    return this.http.post('/api/manage/blog', data);
+  }
 }

@@ -26,7 +26,7 @@
         </ng-template>
         <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDescription">
           <ng-template #nzTitle>
-            <a href="{{ item.href }}" target="_blank">{{ item.title }}</a>
+            <a href="{{ '#/manage/blog/' + item.id }}" target="_blank">{{ item.title }}</a>
           </ng-template>
           <!-- 标签 -->
           <ng-template #nzDescription>
@@ -47,7 +47,7 @@
     </ng-template>
     <ng-template #loadMore>
       <div class="text-center mt-md" *ngIf="pageInfo && pageInfo.next">
-        <button nz-button (click)="getData()" [nzType]="'dashed'" style="min-width: 200px">加载更多</button>
+        <button nz-button (click)="getData(false)" [nzType]="'dashed'" style="min-width: 200px">加载更多</button>
       </div>
     </ng-template>
   </nz-list>

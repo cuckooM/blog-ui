@@ -74,7 +74,7 @@ export class BlogListComponent implements OnInit {
         lodash.remove(this.activeLabels, item => item == idx);
       }
     }
-    this.getData();
+    this.getData(true);
   }
 
   setOwner(): void {
@@ -83,11 +83,15 @@ export class BlogListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getData();
+    this.getData(true);
   }
 
-  getData(): void {
+  getData(reset: boolean): void {
     this.loading = true;
+    if (reset) {
+      delete this.pageInfo;
+      this.list = [];
+    }
     let sort = 'updateTime,desc';
     let params: PageParams = this.pageInfo ? { page: this.pageInfo.number + 1, size: this.pageInfo.size, sort: sort } : { sort: sort };
     if (this.activeLabels.length > 0) {
