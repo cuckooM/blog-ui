@@ -1,0 +1,15 @@
+<nz-spin [nzSpinning]="loading">
+  <div class="pv32">
+    <div class="pv8">
+      <span>{{ data?.title }}</span>
+    </div>
+    <div class="pv8">
+      <span [innerHTML]="data?.content"></span>
+    </div>
+    <div class="pv8" *ngIf="data && data.author && data.updateTime">
+      <span>{{ data.author.displayName }}</span>
+      <span class="px-sm">{{ 'blog.attr.updateTime' | i18n }}</span>
+      <time class="text-grey" title="{{ data.updateTime }}">{{ data.updateTime | _date }}</time>
+    </div>
+  </div>
+</nz-spin>

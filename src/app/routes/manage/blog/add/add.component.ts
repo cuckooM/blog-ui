@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { _HttpClient } from '@delon/theme';
 import * as lodash from 'lodash';
 
 import { Label, LabelService } from '../../label';
+import { BlogService } from '../blog.service';
 import { Blog } from '../model';
 
 @Component({
@@ -11,7 +13,7 @@ import { Blog } from '../model';
   styleUrls: ['./add.component.less']
 })
 export class BlogAddComponent implements OnInit {
-  constructor(private http: _HttpClient, private labelService: LabelService) {}
+  constructor(private http: _HttpClient, private router: Router, private blogService: BlogService, private labelService: LabelService) {}
 
   /** 表单数据 */
   data: Blog = { labels: [] };
@@ -53,5 +55,13 @@ export class BlogAddComponent implements OnInit {
 
   submit() {
     this.http.post('/api/manage/blog', this.data).subscribe(() => {});
+    this.blogService.add(this.data).subscribe(
+      data => {
+        this.router.navigate(['manage', 'blog', data.id]);
+      },
+      e => {
+        console.log(e);
+      }
+    );
   }
 }

@@ -10,7 +10,7 @@ import {
 import { Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
-import { ALAIN_I18N_TOKEN, IGNORE_BASE_URL, _HttpClient, CUSTOM_ERROR, RAW_BODY } from '@delon/theme';
+import { ALAIN_I18N_TOKEN, IGNORE_BASE_URL, _HttpClient } from '@delon/theme';
 import { environment } from '@env/environment';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { BehaviorSubject, Observable, of, throwError, catchError, filter, mergeMap, switchMap, take } from 'rxjs';
@@ -238,8 +238,16 @@ export class DefaultInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // 统一加上服务端前缀
     let url = req.url;
+    // 允许匿名访问的 api，统一加上后缀
+    if (url.startsWith('/api/blog') || url.startsWith('/api/label')) {
+      if (url.includes('?')) {
+        url = `${url}&_allow_anonymous=true`;
+      } else {
+        url = `${url}?_allow_anonymous=true`;
+      }
+    }
+    // 统一加上服务端前缀
     if (!req.context.get(IGNORE_BASE_URL) && !url.startsWith('https://') && !url.startsWith('http://')) {
       const { baseUrl } = environment.api;
       url = baseUrl + (baseUrl.endsWith('/') && url.startsWith('/') ? url.substring(1) : url);

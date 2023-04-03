@@ -9,9 +9,10 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 
 import { BlogAddComponent } from './add/add.component';
 import { BlogRoutingModule } from './blog-routing.module';
+import { BlogDetailComponent } from './detail/detail.component';
 import { BlogListComponent } from './list/list.component';
 
-const COMPONENTS: Array<Type<void>> = [BlogAddComponent, BlogAddComponent, BlogListComponent];
+const COMPONENTS: Array<Type<void>> = [BlogAddComponent, BlogAddComponent, BlogListComponent, BlogDetailComponent];
 
 @NgModule({
   imports: [SharedModule, BlogRoutingModule, EditorModule, TagSelectModule, NzPaginationModule, NzStepsModule, NzTagModule, NzListModule],
