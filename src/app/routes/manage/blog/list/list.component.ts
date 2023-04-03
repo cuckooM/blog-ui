@@ -91,7 +91,7 @@ export class BlogListComponent implements OnInit {
     let sort = 'updateTime,desc';
     let params: PageParams = this.pageInfo ? { page: this.pageInfo.number + 1, size: this.pageInfo.size, sort: sort } : { sort: sort };
     if (this.activeLabels.length > 0) {
-      params['labelIdsIn'] = lodash.join(this.activeLabels, ',');
+      params['labels.idIn'] = lodash.join(this.activeLabels, ',');
     }
     zip(this.blogService.page(params), this.labelService.list()).subscribe(
       ([page, labels]) => {
