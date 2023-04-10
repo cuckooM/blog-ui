@@ -1,16 +1,14 @@
 <nz-card [nzBordered]="false">
   <form nz-form se-container="1" size="compact" [gutter]="32" [labelWidth]="null">
     <se label="{{ 'label.title' | i18n }}" line>
-      <tag-select>
-        <nz-tag
-          *ngFor="let i of labels"
-          nzMode="checkable"
-          [nzChecked]="activeLabels.includes(i.id)"
-          (nzCheckedChange)="changeCategory($event, i.id)"
-        >
-          {{ i.name }}
-        </nz-tag>
-      </tag-select>
+      <nz-tag
+        *ngFor="let i of labels"
+        nzMode="checkable"
+        [nzChecked]="activeLabels.includes(i.id)"
+        (nzCheckedChange)="changeCategory($event, i.id)"
+      >
+        {{ i.name }}
+      </nz-tag>
     </se>
   </form>
 </nz-card>
@@ -26,7 +24,7 @@
         </ng-template>
         <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDescription">
           <ng-template #nzTitle>
-            <a href="{{ '#/manage/blog/' + item.id }}" target="_blank">{{ item.title }}</a>
+            <a href="{{ '#/blog/' + item.id }}">{{ item.title }}</a>
           </ng-template>
           <!-- 标签 -->
           <ng-template #nzDescription>

@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { PageInfo, PageParams } from '@core';
-import { _HttpClient } from '@delon/theme';
 import * as lodash from 'lodash';
 import { zip } from 'rxjs';
 
-import { Label, LabelService } from '../../label';
+import { Label, LabelService } from '../../manage/label';
 import { BlogService } from '../blog.service';
 import { Blog } from '../model';
 
@@ -14,19 +13,7 @@ import { Blog } from '../model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BlogListComponent implements OnInit {
-  constructor(
-    private http: _HttpClient,
-    private cdr: ChangeDetectorRef,
-    private blogService: BlogService,
-    private labelService: LabelService
-  ) {}
-  q = {
-    ps: 5,
-    categories: [],
-    owners: ['zxx'],
-    user: '',
-    rate: ''
-  };
+  constructor(private cdr: ChangeDetectorRef, private blogService: BlogService, private labelService: LabelService) {}
   /** 是否加载中 */
   loading = false;
   /** 列表数据 */
@@ -38,31 +25,6 @@ export class BlogListComponent implements OnInit {
   labels: Label[] = [{ id: 0, name: '全部' }];
   // 当前活跃标签
   activeLabels: number[] = [];
-  // endregion
-
-  // region: owners
-  owners = [
-    {
-      id: 'wzj',
-      name: '我自己'
-    },
-    {
-      id: 'wjh',
-      name: '吴家豪'
-    },
-    {
-      id: 'zxx',
-      name: '周星星'
-    },
-    {
-      id: 'zly',
-      name: '赵丽颖'
-    },
-    {
-      id: 'ym',
-      name: '姚明'
-    }
-  ];
 
   changeCategory(status: boolean, idx: number): void {
     if (idx == 0) {
@@ -75,11 +37,6 @@ export class BlogListComponent implements OnInit {
       }
     }
     this.getData(true);
-  }
-
-  setOwner(): void {
-    this.q.owners = [`wzj`];
-    setTimeout(() => this.cdr.detectChanges());
   }
 
   ngOnInit(): void {

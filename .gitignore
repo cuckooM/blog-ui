@@ -353,3 +353,4 @@ MigrationBackup/
 yarn.lock
 .angular/
 dist/
+.DS_Store
