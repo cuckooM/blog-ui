@@ -22,7 +22,7 @@
           "children": [
             {
               "text": "我的博客",
-              "link": "/manage/blog/list",
+              "link": "/blog/list",
               "i18n": "blog.mine"
             },
             {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { BlogService } from '../blog.service';
@@ -7,7 +7,8 @@ import { Blog } from '../model';
 @Component({
   selector: 'app-blog-detail',
   templateUrl: './detail.component.html',
-  styleUrls: ['./detail.component.less']
+  styleUrls: ['./detail.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BlogDetailComponent implements OnInit {
   /** 博客数据 */
@@ -18,6 +19,7 @@ export class BlogDetailComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private blogService: BlogService) {}
 
   ngOnInit(): void {
+    debugger;
     // 获取 ID
     this.loading = true;
     this.activatedRoute.paramMap.subscribe(paramMap => {

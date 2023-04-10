@@ -1,5 +1,5 @@
-import { Label } from '../../label';
-import { User } from '../../user/model';
+import { Label } from '../../manage/label';
+import { User } from '../../manage/user/model';
 
 /**
  * 博客实体

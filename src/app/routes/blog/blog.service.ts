@@ -3,7 +3,7 @@ import { _HttpClient } from '@delon/theme';
 import { Observable } from 'rxjs';
 import { PageParams } from 'src/app/core/net/model/params';
 
-import { Page } from '../../../core';
+import { Page } from '../../core';
 import { Blog } from './model/blog';
 
 /**

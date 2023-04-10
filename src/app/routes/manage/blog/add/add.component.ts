@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { _HttpClient } from '@delon/theme';
 import * as lodash from 'lodash';
+import { BlogService } from 'src/app/routes/blog/blog.service';
+import { Blog } from 'src/app/routes/blog/model';
 
 import { Label, LabelService } from '../../label';
-import { BlogService } from '../blog.service';
-import { Blog } from '../model';
 
 @Component({
   selector: 'app-blog-add',

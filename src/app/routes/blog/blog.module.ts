@@ -7,12 +7,11 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 
-import { BlogAddComponent } from './add/add.component';
 import { BlogRoutingModule } from './blog-routing.module';
 import { BlogDetailComponent } from './detail/detail.component';
 import { BlogListComponent } from './list/list.component';
 
-const COMPONENTS: Array<Type<void>> = [BlogAddComponent, BlogAddComponent, BlogListComponent, BlogDetailComponent];
+const COMPONENTS: Array<Type<void>> = [BlogListComponent, BlogDetailComponent];
 
 @NgModule({
   imports: [SharedModule, BlogRoutingModule, EditorModule, TagSelectModule, NzPaginationModule, NzStepsModule, NzTagModule, NzListModule],
