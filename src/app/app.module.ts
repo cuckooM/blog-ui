@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { Observable } from 'rxjs';
+import { MarkdownModule } from 'ngx-markdown';
 
 // #region default language
 // Reference: https://ng-alain.com/docs/i18n
@@ -89,6 +90,7 @@ import { STWidgetModule } from './shared/st-widget/st-widget.module';
     LayoutModule,
     RoutesModule,
     STWidgetModule,
+    MarkdownModule.forRoot(),
     NzMessageModule,
     NzNotificationModule,
     ...FORM_MODULES,

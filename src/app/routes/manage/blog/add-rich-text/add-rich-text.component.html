@@ -1,0 +1,32 @@
+<div class="pv32">
+  <!-- 标题 -->
+  <div>
+    <span>{{ 'blog.attr.title' | i18n }}</span>
+  </div>
+  <div class="pv8">
+    <input nz-input placeholder="{{ 'blog.attr.title.placeholder' | i18n }}" [(ngModel)]="data.title" maxlength="64" />
+  </div>
+
+  <!-- 内容 -->
+  <div>
+    <span>{{ 'blog.attr.content' | i18n }}</span>
+  </div>
+  <div class="pv8">
+    <editor id="blog-add" [(ngModel)]="data.content" [init]="editorConfig"></editor>
+  </div>
+
+  <!-- 标签 -->
+  <div *ngIf="labels.length > 0">
+    <div>
+      <span>{{ 'blog.attr.label' | i18n }}</span>
+    </div>
+    <div class="pv8">
+      <nz-tag *ngFor="let label of labels" nzMode="checkable" (nzCheckedChange)="tagClick($event, label)">{{ label.name }}</nz-tag>
+    </div>
+  </div>
+
+  <div class="pv32">
+    <!-- 发布 -->
+    <button nz-button [nzSize]="'large'" nzType="primary" (click)="submit()">{{ 'button.publish' | i18n }}</button>
+  </div>
+</div>
