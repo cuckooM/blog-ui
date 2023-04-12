@@ -239,14 +239,6 @@ export class DefaultInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let url = req.url;
-    // 允许匿名访问的 api，统一加上后缀
-    if (url.startsWith('/api/blog') || url.startsWith('/api/label')) {
-      if (url.includes('?')) {
-        url = `${url}&_allow_anonymous=true`;
-      } else {
-        url = `${url}?_allow_anonymous=true`;
-      }
-    }
     // 统一加上服务端前缀
     if (!req.context.get(IGNORE_BASE_URL) && !url.startsWith('https://') && !url.startsWith('http://')) {
       const { baseUrl } = environment.api;

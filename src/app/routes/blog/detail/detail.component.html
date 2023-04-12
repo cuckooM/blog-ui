@@ -4,7 +4,7 @@
       <span>{{ data?.title }}</span>
     </div>
     <div class="pv8">
-      <span [innerHTML]="data?.content"></span>
+      <markdown [data]="data?.content"></markdown>
     </div>
     <div class="pv8" *ngIf="data && data.author && data.updateTime">
       <span>{{ data.author.displayName }}</span>

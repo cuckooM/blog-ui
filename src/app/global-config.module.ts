@@ -21,7 +21,8 @@ const alainConfig: AlainConfig = {
   auth: {
     login_url: '/passport/login',
     token_send_key: 'Authorization',
-    token_send_template: 'Bearer ${token}'
+    token_send_template: 'Bearer ${token}',
+    ignores: [/assets\//, /\/api\/blog/, /\/api\/label/]
   }
 };
 
