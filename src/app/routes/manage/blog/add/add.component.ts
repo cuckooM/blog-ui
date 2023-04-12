@@ -8,11 +8,11 @@ import { Blog } from 'src/app/routes/blog/model';
 import { Label, LabelService } from '../../label';
 
 @Component({
-  selector: 'app-blog-add',
+  selector: 'app-manage-blog-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.less']
 })
-export class BlogAddComponent implements OnInit {
+export class ManageBlogAddComponent implements OnInit {
   constructor(private http: _HttpClient, private router: Router, private blogService: BlogService, private labelService: LabelService) {}
 
   /** 表单数据 */
@@ -35,10 +35,9 @@ export class BlogAddComponent implements OnInit {
   }
 
   submit() {
-    this.http.post('/api/manage/blog', this.data).subscribe(() => {});
     this.blogService.add(this.data).subscribe(
       data => {
-        this.router.navigate(['manage', 'blog', data.id]);
+        this.router.navigate(['blog', data.id]);
       },
       e => {
         console.log(e);

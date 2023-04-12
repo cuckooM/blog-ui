@@ -19,7 +19,7 @@ export class PassportService {
    */
   login(username: string | undefined, passwd: string | undefined): Observable<any> {
     return this.http.post(
-      '/api/authenticate?_allow_anonymous=true',
+      '/api/auth?_allow_anonymous=true',
       {
         username: username,
         password: passwd

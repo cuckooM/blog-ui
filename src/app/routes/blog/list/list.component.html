@@ -32,7 +32,7 @@
           </ng-template>
         </nz-list-item-meta>
         <ng-template #nzContent>
-          <p [innerHTML]="item.content"></p>
+          <markdown [data]="item?.content"></markdown>
           <div class="mt-md d-flex">
             <nz-avatar [nzSrc]="item.avatar" [nzSize]="'small'" class="mr-sm"></nz-avatar>
             <!-- <a href="{{ item.href }}" target="_blank">{{ item.author.displayName }}</a> -->

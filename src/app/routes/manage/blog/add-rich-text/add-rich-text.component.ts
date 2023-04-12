@@ -8,11 +8,11 @@ import { Blog } from 'src/app/routes/blog/model';
 import { Label, LabelService } from '../../label';
 
 @Component({
-  selector: 'app-blog-add-rich-text',
+  selector: 'app-manage-blog-add-rich-text',
   templateUrl: './add-rich-text.component.html',
   styleUrls: ['./add-rich-text.component.less']
 })
-export class BlogAddRichTextComponent implements OnInit {
+export class ManageBlogAddRichTextComponent implements OnInit {
   constructor(private http: _HttpClient, private router: Router, private blogService: BlogService, private labelService: LabelService) {}
 
   /** 表单数据 */
