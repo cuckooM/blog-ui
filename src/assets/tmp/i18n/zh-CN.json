@@ -6,7 +6,8 @@
       "analysis": "分析页",
       "monitor": "监控页",
       "workplace": "工作台"
-    }
+    },
+    "article": "文章"
   },
   "menu.search.placeholder": "搜索：员工、文件、照片等",
   "menu.fullscreen": "全屏",

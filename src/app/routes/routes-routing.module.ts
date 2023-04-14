@@ -33,6 +33,8 @@ const routes: Routes = [
   },
   {
     path: 'blog',
+    component: LayoutBasicComponent,
+    canActivate: [startPageGuard, SimpleGuard],
     loadChildren: () => import('./blog/blog.module').then(m => m.BlogModule)
   },
   // passport

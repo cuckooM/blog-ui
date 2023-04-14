@@ -130,7 +130,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     const token = this.tokenSrv.get()?.token;
     return req.clone({
       setHeaders: {
-        token: `Bearer ${token}`
+        Authorization: `Bearer ${token}`
       }
     });
   }
@@ -147,7 +147,6 @@ export class DefaultInterceptor implements HttpInterceptor {
       .pipe(
         filter(() => !this.refreshToking),
         switchMap(res => {
-          console.log(res);
           this.refreshToking = true;
           return this.refreshTokenRequest();
         })
@@ -201,6 +200,7 @@ export class DefaultInterceptor implements HttpInterceptor {
         // }
         break;
       case 401:
+        debugger;
         if (this.refreshTokenEnabled && this.refreshTokenType === 're-request') {
           return this.tryRefreshToken(ev, req, next);
         }
@@ -238,6 +238,7 @@ export class DefaultInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const token = this.tokenSrv.get()?.token;
     let url = req.url;
     // 统一加上服务端前缀
     if (!req.context.get(IGNORE_BASE_URL) && !url.startsWith('https://') && !url.startsWith('http://')) {
