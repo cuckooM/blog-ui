@@ -1,10 +1,9 @@
-import { HttpContext } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, Optional } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { StartupService } from '@core';
 import { ReuseTabService } from '@delon/abc/reuse-tab';
-import { ALLOW_ANONYMOUS, DA_SERVICE_TOKEN, ITokenService, SocialOpenType, SocialService } from '@delon/auth';
+import { DA_SERVICE_TOKEN, ITokenModel, ITokenService, SocialOpenType, SocialService } from '@delon/auth';
 import { SettingsService, _HttpClient } from '@delon/theme';
 import { environment } from '@env/environment';
 import { NzTabChangeEvent } from 'ng-zorro-antd/tabs';
@@ -105,19 +104,6 @@ export class UserLoginComponent implements OnDestroy {
     this.cdr.detectChanges();
     this.passportService
       .login(this.form.value.userName, this.form.value.password)
-      // this.http
-      //   .post(
-      //     '/login',
-      //     {
-      //       type: this.type,
-      //       userName: this.form.value.userName,
-      //       password: this.form.value.password
-      //     },
-      //     null,
-      //     {
-      //       context: new HttpContext().set(ALLOW_ANONYMOUS, true)
-      //     }
-      //   )
       .pipe(
         finalize(() => {
           this.loading = false;
@@ -125,18 +111,12 @@ export class UserLoginComponent implements OnDestroy {
         })
       )
       .subscribe(
-        res => {
-          // if (res.msg !== 'ok') {
-          //   this.error = res.msg;
-          //   this.cdr.detectChanges();
-          //   return;
-          // }
+        (iToken: ITokenModel) => {
           // 清空路由复用信息
           this.reuseTabService.clear();
           // 设置用户Token信息
-          // TODO: Mock expired value
-          let user = { token: res.id_token, expired: +new Date() + 1000 * 60 * 5 };
-          this.tokenService.set(user);
+          let token = { token: iToken.token, expired: +new Date() + (iToken.expired || 1000 * 60 * 5) };
+          this.tokenService.set(token);
           // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响
           this.startupSrv.load().subscribe(() => {
             let url = this.tokenService.referrer!.url || '/';
