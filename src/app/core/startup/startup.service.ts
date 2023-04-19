@@ -32,16 +32,26 @@ export class StartupService {
     iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
   }
 
-  private viaHttp(): Observable<void> {
+  /**
+   * 加载信息
+   * @param loggedIn 是否已登录
+   */
+  private loadInfo(loggedIn: boolean): Observable<void> {
     const defaultLang = this.i18n.defaultLang;
-    return zip(
-      this.i18n.loadLangData(defaultLang),
-      this.httpClient.get('assets/tmp/app-data.json'),
-      this.httpClient.get('/api/user/current')
-    ).pipe(
+    let requests: Observable<any>;
+    if (loggedIn) {
+      requests = zip(
+        this.i18n.loadLangData(defaultLang),
+        this.httpClient.get('assets/tmp/app-data.json'),
+        this.httpClient.get('/api/user/current')
+      );
+    } else {
+      requests = zip(this.i18n.loadLangData(defaultLang), this.httpClient.get('assets/tmp/app-data.json'));
+    }
+    return requests.pipe(
       catchError((res: NzSafeAny) => {
         console.warn(`StartupService.load: Network request failed`, res);
-        setTimeout(() => this.router.navigateByUrl(`/exception/500`));
+        // setTimeout(() => this.router.navigateByUrl(`/exception/500`));
         return [];
       }),
       map(([langData, appData, user]: [Record<string, string>, NzSafeAny, NzSafeAny]) => {
@@ -52,7 +62,11 @@ export class StartupService {
         // Application information: including site name, description, year
         this.settingService.setApp(appData.app);
         // User information: including name, avatar, email address
-        this.settingService.setUser({ id: user.id, name: user.userName });
+        if (user) {
+          this.settingService.setUser({ id: user.id, name: user.userName });
+        } else {
+          this.settingService.setUser({});
+        }
         // ACL: Set the permissions to full, https://ng-alain.com/acl/getting-started
         this.aclService.setFull(true);
         // Menu data, https://ng-alain.com/theme/menu
@@ -118,8 +132,10 @@ export class StartupService {
   }
 
   load(): Observable<void> {
+    // 首先获取 token
+    let token = this.tokenService.get();
     // http
-    return this.viaHttp();
+    return this.loadInfo(null != token && null != token.token);
     // mock: Don’t use it in a production environment. ViaMock is just to simulate some data to make the scaffolding work normally
     // mock：请勿在生产环境中这么使用，viaMock 单纯只是为了模拟一些数据使脚手架一开始能正常运行
     // return this.viaMockI18n();

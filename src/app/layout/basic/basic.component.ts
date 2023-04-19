@@ -9,7 +9,7 @@ import { environment } from '@env/environment';
   styleUrls: ['./basic.component.less']
 })
 export class LayoutBasicComponent {
-  options: LayoutDefaultOptions = {};
+  options: LayoutDefaultOptions = { hideAside: true };
   showSettingDrawer = !environment.production;
   get user(): User {
     return this.settings.user;
