@@ -38,23 +38,16 @@ const LANGS: { [key: string]: LangConfigData } = {
     date: dfZhCn,
     delon: delonZhCn,
     abbr: '🇨🇳'
-  },
-  'zh-TW': {
-    text: '繁体中文',
-    ng: ngZhTw,
-    zorro: zorroZhTW,
-    date: dfZhTw,
-    delon: delonZhTw,
-    abbr: '🇭🇰'
-  },
-  'en-US': {
-    text: 'English',
-    ng: ngEn,
-    zorro: zorroEnUS,
-    date: dfEn,
-    delon: delonEnUS,
-    abbr: '🇬🇧'
   }
+  // ,
+  // 'en-US': {
+  //   text: 'English',
+  //   ng: ngEn,
+  //   zorro: zorroEnUS,
+  //   date: dfEn,
+  //   delon: delonEnUS,
+  //   abbr: '🇬🇧'
+  // }
 };
 
 @Injectable({ providedIn: 'root' })

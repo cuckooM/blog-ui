@@ -1,13 +1,17 @@
-<layout-default [asideUser]="asideUserTpl" [content]="contentTpl" [customError]="null">
+<layout-default [options]="options" [content]="contentTpl" [customError]="null">
+  <!-- 导航栏中间菜单 -->
   <layout-default-header-item direction="left">
     <div>
+      <!-- 博客 -->
       <a href="#/blog/list">{{ 'menu.article' | i18n }}</a>
     </div>
   </layout-default-header-item>
+  <!-- 导航栏右侧按钮 -->
   <layout-default-header-item direction="right" hidden="mobile">
     <div layout-default-header-item-trigger nz-dropdown [nzDropdownMenu]="settingsMenu" nzTrigger="click" nzPlacement="bottomRight">
       <i nz-icon nzType="setting"></i>
     </div>
+    <!-- 设置按钮 -->
     <nz-dropdown-menu #settingsMenu="nzDropdownMenu">
       <div nz-menu style="width: 200px">
         <div nz-menu-item>
@@ -23,25 +27,16 @@
     </nz-dropdown-menu>
   </layout-default-header-item>
   <layout-default-header-item direction="right">
+    <!-- 登录/用户按钮 -->
     <header-user></header-user>
   </layout-default-header-item>
-  <ng-template #asideUserTpl>
-    <div nz-dropdown nzTrigger="click" [nzDropdownMenu]="userMenu" class="alain-default__aside-user">
-      <nz-avatar class="alain-default__aside-user-avatar" [nzSrc]="user.avatar"></nz-avatar>
-      <div class="alain-default__aside-user-info">
-        <strong>{{ user.name }}</strong>
-        <p class="mb0">{{ user.email }}</p>
-      </div>
-    </div>
-    <nz-dropdown-menu #userMenu="nzDropdownMenu">
-      <!-- <ul nz-menu>
-        <li nz-menu-item routerLink="/pro/account/center">{{ 'menu.account.center' | i18n }}</li>
-        <li nz-menu-item routerLink="/pro/account/settings">{{ 'menu.account.settings' | i18n }}</li>
-      </ul> -->
-    </nz-dropdown-menu>
-  </ng-template>
   <ng-template #contentTpl>
-    <router-outlet></router-outlet>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+    <div class="copyright">
+      <a href="https://beian.miit.gov.cn" target="_blank" class="text-grey">浙ICP备2023009925</a>
+    </div>
   </ng-template>
 </layout-default>
 
