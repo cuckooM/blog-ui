@@ -127,7 +127,7 @@ export class UserLoginComponent implements OnDestroy {
           });
         },
         e => {
-          this.error = e.message;
+          this.error = '用户名或密码错误';
         }
       );
   }
