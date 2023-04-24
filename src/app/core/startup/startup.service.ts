@@ -37,36 +37,36 @@ export class StartupService {
    * @param loggedIn 是否已登录
    */
   private loadInfo(loggedIn: boolean): Observable<void> {
-    const defaultLang = this.i18n.defaultLang;
-    let requests: Observable<any>;
+    // 当前登录人员信息
     if (loggedIn) {
-      requests = zip(
-        this.i18n.loadLangData(defaultLang),
-        this.httpClient.get('assets/tmp/app-data.json'),
-        this.httpClient.get('/api/user/current')
+      this.httpClient.get('/api/user/current').subscribe(
+        (user: NzSafeAny) => {
+          if (user) {
+            this.settingService.setUser({ id: user.id, name: user.userName, displayName: user.displayName });
+          } else {
+            this.settingService.setUser({});
+          }
+        },
+        () => {
+          this.settingService.setUser({});
+        }
       );
-    } else {
-      requests = zip(this.i18n.loadLangData(defaultLang), this.httpClient.get('assets/tmp/app-data.json'));
     }
-    return requests.pipe(
+
+    const defaultLang = this.i18n.defaultLang;
+    return zip(this.i18n.loadLangData(defaultLang), this.httpClient.get('assets/tmp/app-data.json')).pipe(
       catchError((res: NzSafeAny) => {
         console.warn(`StartupService.load: Network request failed`, res);
         // setTimeout(() => this.router.navigateByUrl(`/exception/500`));
         return [];
       }),
-      map(([langData, appData, user]: [Record<string, string>, NzSafeAny, NzSafeAny]) => {
+      map(([langData, appData]: [Record<string, string>, NzSafeAny]) => {
         // setting language data
         this.i18n.use(defaultLang, langData);
 
         // Application data
         // Application information: including site name, description, year
         this.settingService.setApp(appData.app);
-        // User information: including name, avatar, email address
-        if (user) {
-          this.settingService.setUser({ id: user.id, name: user.userName, displayName: user.displayName });
-        } else {
-          this.settingService.setUser({});
-        }
         // ACL: Set the permissions to full, https://ng-alain.com/acl/getting-started
         this.aclService.setFull(true);
         // Menu data, https://ng-alain.com/theme/menu
