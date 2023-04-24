@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { _HttpClient } from '@delon/theme';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as lodash from 'lodash';
+import { Observable, zip, map } from 'rxjs';
 import { BlogService } from 'src/app/routes/blog/blog.service';
 import { Blog } from 'src/app/routes/blog/model';
 
@@ -13,7 +13,12 @@ import { Label, LabelService } from '../../label';
   styleUrls: ['./add.component.less']
 })
 export class ManageBlogAddComponent implements OnInit {
-  constructor(private http: _HttpClient, private router: Router, private blogService: BlogService, private labelService: LabelService) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private blogService: BlogService,
+    private labelService: LabelService
+  ) {}
 
   /** 表单数据 */
   data: Blog = { labels: [] };
@@ -21,8 +26,18 @@ export class ManageBlogAddComponent implements OnInit {
   labels: Label[] = [];
 
   ngOnInit(): void {
-    this.labelService.list().subscribe(labels => {
-      this.labels = labels;
+    this.activatedRoute.paramMap.pipe().subscribe(paramMap => {
+      let id = paramMap.get('id');
+      let requests: Observable<any>;
+      if (id) {
+        requests = zip(this.labelService.list(), this.blogService.find(id));
+      } else {
+        requests = zip(this.labelService.list());
+      }
+      requests.subscribe(([labels, blog]) => {
+        this.labels = labels;
+        this.data = blog;
+      });
     });
   }
 
@@ -35,7 +50,13 @@ export class ManageBlogAddComponent implements OnInit {
   }
 
   submit() {
-    this.blogService.add(this.data).subscribe(
+    let request: Observable<Blog>;
+    if (this.data.id) {
+      request = this.blogService.update(this.data.id, this.data);
+    } else {
+      request = this.blogService.add(this.data);
+    }
+    request.subscribe(
       data => {
         this.router.navigate(['blog', data.id]);
       },

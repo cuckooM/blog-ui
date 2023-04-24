@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { SettingsService, User } from '@delon/theme';
 
 import { BlogService } from '../blog.service';
 import { Blog } from '../model';
@@ -10,12 +11,18 @@ import { Blog } from '../model';
   styleUrls: ['./detail.component.less']
 })
 export class BlogDetailComponent implements OnInit {
+  /**
+   * 当前用户
+   */
+  get user(): User {
+    return this.settings.user;
+  }
   /** 博客数据 */
   data: Blog | undefined;
   // 加载状态
   loading: boolean = false;
 
-  constructor(private activatedRoute: ActivatedRoute, private blogService: BlogService) {}
+  constructor(private activatedRoute: ActivatedRoute, private blogService: BlogService, private settings: SettingsService) {}
 
   ngOnInit(): void {
     // 获取 ID

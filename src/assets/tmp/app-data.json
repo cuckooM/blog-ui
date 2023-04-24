@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Alain",
+    "name": "cuckooM",
     "description": "Ng-zorro admin panel front-end framework"
   },
   "user": {
@@ -21,9 +21,9 @@
           "icon": "anticon-dashboard",
           "children": [
             {
-              "text": "我的博客",
+              "text": "博客列表",
               "link": "/blog/list",
-              "i18n": "blog.mine"
+              "i18n": "blog.list"
             },
             {
               "text": "发布博客",

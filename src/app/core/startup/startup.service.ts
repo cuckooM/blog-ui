@@ -63,7 +63,7 @@ export class StartupService {
         this.settingService.setApp(appData.app);
         // User information: including name, avatar, email address
         if (user) {
-          this.settingService.setUser({ id: user.id, name: user.userName });
+          this.settingService.setUser({ id: user.id, name: user.userName, displayName: user.displayName });
         } else {
           this.settingService.setUser({});
         }

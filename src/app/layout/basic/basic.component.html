@@ -1,17 +1,17 @@
 <layout-default [options]="options" [content]="contentTpl" [customError]="null">
-  <!-- µº∫Ω¿∏÷–º‰≤Àµ• -->
+  <!-- ÂØºËà™Ê†è‰∏≠Èó¥ËèúÂçï -->
   <layout-default-header-item direction="left">
     <div>
-      <!-- ≤©øÕ -->
+      <!-- ÂçöÂÆ¢ -->
       <a href="#/blog/list">{{ 'menu.article' | i18n }}</a>
     </div>
   </layout-default-header-item>
-  <!-- µº∫Ω¿∏”“≤‡∞¥≈• -->
+  <!-- ÂØºËà™Ê†èÂè≥‰æßÊåâÈíÆ -->
   <layout-default-header-item direction="right" hidden="mobile">
     <div layout-default-header-item-trigger nz-dropdown [nzDropdownMenu]="settingsMenu" nzTrigger="click" nzPlacement="bottomRight">
       <i nz-icon nzType="setting"></i>
     </div>
-    <!-- …Ë÷√∞¥≈• -->
+    <!-- ËÆæÁΩÆÊåâÈíÆ -->
     <nz-dropdown-menu #settingsMenu="nzDropdownMenu">
       <div nz-menu style="width: 200px">
         <div nz-menu-item>
@@ -27,7 +27,7 @@
     </nz-dropdown-menu>
   </layout-default-header-item>
   <layout-default-header-item direction="right">
-    <!-- µ«¬º/”√ªß∞¥≈• -->
+    <!-- ÁôªÂΩï/Áî®Êà∑ÊåâÈíÆ -->
     <header-user></header-user>
   </layout-default-header-item>
   <ng-template #contentTpl>
@@ -35,7 +35,7 @@
       <router-outlet></router-outlet>
     </div>
     <div class="copyright">
-      <a href="https://beian.miit.gov.cn" target="_blank" class="text-grey">’„ICP±∏2023009925</a>
+      <a href="https://beian.miit.gov.cn" target="_blank" class="text-grey">ÊµôICPÂ§á2023009925</a>
     </div>
   </ng-template>
 </layout-default>
