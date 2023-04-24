@@ -1,11 +1,18 @@
-<nz-spin [nzSpinning]="loading">
-  <div class="pv32">
-    <div class="pv8">
+<nz-spin [nzSpinning]="loading" class="pd32">
+  <div>
+    <div class="pv8 header">
+      <!-- 标题 -->
       <span>{{ data?.title }}</span>
+      <!-- 操作按钮 -->
+      <div class="oper" *ngIf="user?.['id'] == data?.authorId">
+        <a href="{{ '#/manage/blog/update/' + data?.id }}"><span nz-icon nzType="edit" nzTheme="outline"></span></a>
+      </div>
     </div>
     <div class="pv8">
+      <!-- 内容 -->
       <markdown [data]="data?.content"></markdown>
     </div>
+    <!-- 底部信息 -->
     <div class="pv8" *ngIf="data && data.author && data.updateTime">
       <span>{{ data.author.displayName }}</span>
       <span class="px-sm">{{ 'blog.attr.updateTime' | i18n }}</span>

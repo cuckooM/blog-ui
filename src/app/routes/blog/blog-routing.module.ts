@@ -6,6 +6,7 @@ import { BlogListComponent } from './list/list.component';
 
 const routes: Routes = [
   { path: 'list', component: BlogListComponent },
+  { path: 'list/:userName', component: BlogListComponent },
   { path: ':id', component: BlogDetailComponent },
   { path: '', pathMatch: 'full', redirectTo: 'list' }
 ];

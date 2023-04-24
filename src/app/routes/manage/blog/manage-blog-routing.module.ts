@@ -6,6 +6,7 @@ import { ManageBlogAddComponent } from './add/add.component';
 
 const routes: Routes = [
   { path: 'add', component: ManageBlogAddComponent },
+  { path: 'update/:id', component: ManageBlogAddComponent },
   { path: 'add-rich-text', component: ManageBlogAddRichTextComponent },
   { path: '', pathMatch: 'full', redirectTo: 'add' }
 ];

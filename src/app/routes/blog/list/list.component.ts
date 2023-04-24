@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { PageInfo, PageParams } from '@core';
 import * as lodash from 'lodash';
 import { zip } from 'rxjs';
@@ -13,9 +14,16 @@ import { Blog } from '../model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BlogListComponent implements OnInit {
-  constructor(private cdr: ChangeDetectorRef, private blogService: BlogService, private labelService: LabelService) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
+    private blogService: BlogService,
+    private labelService: LabelService
+  ) {}
   /** 是否加载中 */
   loading = false;
+  /** 当前作者名称 */
+  userName: string | null = null;
   /** 列表数据 */
   list: Blog[] = [];
   /** 分页信息 */
@@ -40,6 +48,9 @@ export class BlogListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe(paramMap => {
+      this.userName = paramMap.get('userName');
+    });
     this.getData(true);
   }
 
@@ -53,6 +64,9 @@ export class BlogListComponent implements OnInit {
     let params: PageParams = this.pageInfo ? { page: this.pageInfo.number + 1, size: this.pageInfo.size, sort: sort } : { sort: sort };
     if (this.activeLabels.length > 0) {
       params['labels.idIn'] = lodash.join(this.activeLabels, ',');
+    }
+    if (null != this.userName) {
+      params['userName'] = this.userName;
     }
     zip(this.blogService.page(params), this.labelService.list()).subscribe(
       ([page, labels]) => {

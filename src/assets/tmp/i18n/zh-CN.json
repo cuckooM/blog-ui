@@ -167,6 +167,7 @@
   "blog.title": "博客",
   "blog.publish": "发布博客",
   "blog.mine": "我的博客",
+  "blog.list": "博客列表",
   "blog.attr.title": "标题",
   "blog.attr.content": "内容",
   "blog.attr.label": "标签",

@@ -7,7 +7,7 @@ import { SettingsService, User } from '@delon/theme';
   selector: 'header-user',
   template: `
     <div *ngIf="!user['id']" class="alain-default__nav-item d-flex align-items-center px-sm">
-      <!-- µÇÂ¼ -->
+      <!-- ç™»å½• -->
       <a (click)="logout()">{{ 'app.login.login' | i18n }}</a>
     </div>
     <div
@@ -18,7 +18,7 @@ import { SettingsService, User } from '@delon/theme';
       [nzDropdownMenu]="userMenu"
     >
       <nz-avatar [nzSrc]="user.avatar" nzSize="small" class="mr-sm"></nz-avatar>
-      {{ user.name }}
+      {{ user['displayName'] }}
     </div>
     <nz-dropdown-menu #userMenu="nzDropdownMenu">
       <div nz-menu class="width-sm">
@@ -34,18 +34,18 @@ import { SettingsService, User } from '@delon/theme';
           <i nz-icon nzType="close-circle" class="mr-sm"></i>
           {{ 'menu.account.trigger' | i18n }}
         </div> -->
-        <!-- ÎÒµÄ²©¿Í -->
+        <!-- æˆ‘çš„åšå®¢ -->
         <div nz-menu-item (click)="mineBlog()">
           <i class="mr-sm"></i>
           <span>{{ 'blog.mine' | i18n }}</span>
         </div>
-        <!-- ·¢²¼²©¿Í -->
+        <!-- å‘å¸ƒåšå®¢ -->
         <div nz-menu-item (click)="addBlog()">
           <i class="mr-sm"></i>
           <span>{{ 'blog.publish' | i18n }}</span>
         </div>
         <li nz-menu-divider></li>
-        <!-- ÍË³öµÇÂ¼ -->
+        <!-- é€€å‡ºç™»å½• -->
         <div nz-menu-item (click)="logout()">
           <i nz-icon nzType="logout" class="mr-sm"></i>
           {{ 'menu.account.logout' | i18n }}
@@ -71,7 +71,7 @@ export class HeaderUserComponent {
   constructor(private settings: SettingsService, private router: Router, @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService) {}
 
   /**
-   * ÍË³öµÇÂ¼
+   * é€€å‡ºç™»å½•
    */
   logout(): void {
     this.tokenService.clear();
@@ -80,14 +80,14 @@ export class HeaderUserComponent {
   }
 
   /**
-   * Ìø×ª¡°ÎÒµÄ²©¿Í¡±Ò³Ãæ
+   * è·³è½¬â€œæˆ‘çš„åšå®¢â€é¡µé¢
    */
   mineBlog() {
-    this.router.navigate(['blog', 'list']);
+    this.router.navigate(['blog', 'list', this.user.name]);
   }
 
   /**
-   * Ìø×ª¡°·¢²¼²©¿Í¡±Ò³Ãæ
+   * è·³è½¬â€œå‘å¸ƒåšå®¢â€é¡µé¢
    */
   addBlog() {
     this.router.navigate(['manage', 'blog', 'add']);

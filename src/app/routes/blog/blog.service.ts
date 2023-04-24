@@ -41,4 +41,14 @@ export class BlogService {
   add(data: Blog): Observable<Blog> {
     return this.http.post('/api/manage/blog', data);
   }
+
+  /**
+   * 编辑实体
+   * @param id ID
+   * @param data 待编辑数据
+   * @returns 结果
+   */
+  update(id: number | string, data: Blog): Observable<Blog> {
+    return this.http.put(`/api/manage/blog/${id}`, data);
+  }
 }
