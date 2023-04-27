@@ -1,14 +1,15 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
-import { SettingsService, User } from '@delon/theme';
+import { ModalHelper, SettingsService, User } from '@delon/theme';
+import { LoginModalComponent } from 'src/app/routes/passport/login-modal/login.component';
 
 @Component({
   selector: 'header-user',
   template: `
     <div *ngIf="!user['id']" class="alain-default__nav-item d-flex align-items-center px-sm">
       <!-- 登录 -->
-      <a (click)="logout()">{{ 'app.login.login' | i18n }}</a>
+      <a (click)="login()">{{ 'app.login.login' | i18n }}</a>
     </div>
     <div
       *ngIf="user['id']"
@@ -68,7 +69,27 @@ export class HeaderUserComponent {
     return this.settings.user;
   }
 
-  constructor(private settings: SettingsService, private router: Router, @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService) {}
+  constructor(
+    private modalHelper: ModalHelper,
+    private settings: SettingsService,
+    private router: Router,
+    @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  /**
+   * 登录
+   */
+  login(): void {
+    let params = {
+      callback: () => {
+        this.cdr.detectChanges();
+      }
+    };
+    this.modalHelper.create(LoginModalComponent, params, { size: 'sm' }).subscribe(res => {
+      console.log(res);
+    });
+  }
 
   /**
    * 退出登录

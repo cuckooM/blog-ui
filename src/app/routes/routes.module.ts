@@ -7,6 +7,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CallbackComponent } from './passport/callback.component';
 import { UserLockComponent } from './passport/lock/lock.component';
 // passport pages
+import { LoginModalComponent } from './passport/login-modal/login.component';
 import { UserLoginComponent } from './passport/login/login.component';
 import { UserRegisterResultComponent } from './passport/register-result/register-result.component';
 import { UserRegisterComponent } from './passport/register/register.component';
@@ -20,7 +21,8 @@ const COMPONENTS: Array<Type<void>> = [
   UserRegisterResultComponent,
   // single pages
   CallbackComponent,
-  UserLockComponent
+  UserLockComponent,
+  LoginModalComponent
 ];
 
 @NgModule({
