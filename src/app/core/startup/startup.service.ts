@@ -6,7 +6,7 @@ import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 import { ALAIN_I18N_TOKEN, MenuService, SettingsService, TitleService } from '@delon/theme';
 import type { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzIconService } from 'ng-zorro-antd/icon';
-import { Observable, zip, of, catchError, map } from 'rxjs';
+import { Observable, zip, of, catchError, map, mergeMap } from 'rxjs';
 
 import { ICONS } from '../../../style-icons';
 import { ICONS_AUTO } from '../../../style-icons-auto';
@@ -37,33 +37,17 @@ export class StartupService {
    * @param loggedIn 是否已登录
    */
   private loadInfo(loggedIn: boolean): Observable<void> {
-    // 当前登录人员信息
-    if (loggedIn) {
-      this.httpClient.get('/api/user/current').subscribe(
-        (user: NzSafeAny) => {
-          if (user) {
-            this.settingService.setUser({ id: user.id, name: user.userName, displayName: user.displayName });
-          } else {
-            this.settingService.setUser({});
-          }
-        },
-        () => {
-          this.settingService.setUser({});
-        }
-      );
-    }
-
     const defaultLang = this.i18n.defaultLang;
     return zip(this.i18n.loadLangData(defaultLang), this.httpClient.get('assets/tmp/app-data.json')).pipe(
       catchError((res: NzSafeAny) => {
         console.warn(`StartupService.load: Network request failed`, res);
         // setTimeout(() => this.router.navigateByUrl(`/exception/500`));
+        this.settingService.setUser({});
         return [];
       }),
-      map(([langData, appData]: [Record<string, string>, NzSafeAny]) => {
+      mergeMap(([langData, appData]: [Record<string, string>, NzSafeAny]) => {
         // setting language data
         this.i18n.use(defaultLang, langData);
-
         // Application data
         // Application information: including site name, description, year
         this.settingService.setApp(appData.app);
@@ -73,6 +57,18 @@ export class StartupService {
         this.menuService.add(appData.menu);
         // Can be set page suffix title, https://ng-alain.com/theme/title
         this.titleService.suffix = appData.app.name;
+        // 查询当前登录人员信息
+        if (loggedIn) {
+          return this.httpClient.get('/api/user/current');
+        }
+        return of();
+      }),
+      map((user: NzSafeAny | undefined) => {
+        if (user) {
+          this.settingService.setUser({ id: user.id, name: user.userName, displayName: user.displayName });
+        } else {
+          this.settingService.setUser({});
+        }
       })
     );
   }
@@ -134,10 +130,7 @@ export class StartupService {
   load(): Observable<void> {
     // 首先获取 token
     let token = this.tokenService.get();
-    // http
+    // 加载初始化数据
     return this.loadInfo(null != token && null != token.token);
-    // mock: Don’t use it in a production environment. ViaMock is just to simulate some data to make the scaffolding work normally
-    // mock：请勿在生产环境中这么使用，viaMock 单纯只是为了模拟一些数据使脚手架一开始能正常运行
-    // return this.viaMockI18n();
   }
 }

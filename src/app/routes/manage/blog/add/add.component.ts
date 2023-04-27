@@ -24,6 +24,8 @@ export class ManageBlogAddComponent implements OnInit {
   data: Blog = { labels: [] };
   // 标签
   labels: Label[] = [];
+  // 加载状态
+  loading = false;
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.pipe().subscribe(paramMap => {
@@ -50,6 +52,7 @@ export class ManageBlogAddComponent implements OnInit {
   }
 
   submit() {
+    this.loading = true;
     let request: Observable<Blog>;
     if (this.data.id) {
       request = this.blogService.update(this.data.id, this.data);
@@ -58,9 +61,11 @@ export class ManageBlogAddComponent implements OnInit {
     }
     request.subscribe(
       data => {
+        this.loading = false;
         this.router.navigate(['blog', data.id]);
       },
       e => {
+        this.loading = false;
         console.log(e);
       }
     );
