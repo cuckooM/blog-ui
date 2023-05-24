@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { StartupService } from '@core';
 import { ReuseTabService } from '@delon/abc/reuse-tab';
 import { DA_SERVICE_TOKEN, ITokenModel, ITokenService, SocialOpenType, SocialService } from '@delon/auth';
-import { SettingsService } from '@delon/theme';
+import { SettingsService, _HttpClient } from '@delon/theme';
 import { environment } from '@env/environment';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 import { NzModalRef } from 'ng-zorro-antd/modal';
@@ -33,7 +33,8 @@ export class LoginModalComponent implements OnDestroy {
     private startupSrv: StartupService,
     private cdr: ChangeDetectorRef,
     private passportService: PassportService,
-    private nzModalRef: NzModalRef
+    private nzModalRef: NzModalRef,
+    private http: _HttpClient
   ) {}
 
   // 登陆成功后回调函数
