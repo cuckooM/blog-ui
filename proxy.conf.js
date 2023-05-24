@@ -11,6 +11,7 @@ module.exports = {
    */
   '/': {
     target: 'http://localhost:8082/',
+    // target: 'https://www.cuckoom.com/',
     secure: false, // Ignore invalid SSL certificates
     changeOrigin: false
   }
