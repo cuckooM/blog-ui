@@ -38,7 +38,9 @@ export class ManageBlogAddComponent implements OnInit {
       }
       requests.subscribe(([labels, blog]) => {
         this.labels = labels;
-        this.data = blog;
+        if (blog) {
+          this.data = blog;
+        }
       });
     });
   }
